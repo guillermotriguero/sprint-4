@@ -6,10 +6,155 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sprint 4.1</title>
+
+    <!-- Bootstrap CSS / URL externa que no utilizo: -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+
 </head>
 
 <body>
 
+    <!-- TEMAS QUE FALLAN/COMENTAR PABLO
+        1) Cuando provoco error y luego escribo bien, no refresca y quita el mensaje de error.
+    2) Duda: Bootstrap de por si ya mira que el formato mail sea correcto, ¿se puede controlar el mensaje de error?
+        3) Por qué he de borrar esto para que funcione el SEARCH searchForm.classList.remove('is-invalid'); ??
+    4) ¿Ya valen los mensajes que pongo o he de afinar más ("falta una mayúscula en la contraseña")?
+
+
+    - Regex email validacion
+-->
+
+    <!-- VALIDAR FORMULARIS:
+- Nota: els formularis no es validen amb ALERTS!!
+- Nota: els formularis No es podrán validar amb la etiqueta required
+- Pista: utiliza la clase "is-invalid"amb Bootstrap 4.
+- Si está OK, simplemente que vuelva a cargar la página sin más.
+
+1) Formulari de cerca:
+● Condicions: La paraula introduïda haurà de ser obligatòria i contenir més de 3 caràcters.
+
+2) Formulari de login (haurà de tenir un camp email i un altre de contrasenya):
+● Condicions: Els camps email i contrasenya hauran de ser obligatoris.
+- El email haurà de seguir el format estàndard dels email 
+
+3) Crear i validar un formulari de registre (com a mínim haurà de tenir un camp email, contrasenya, repetició de
+contrasenya i un desplegable de província).
+● Les condicions de validació les deixem a les vostres mans.
+
+ejemplo: https://www.w3schools.com/js/js_validation.asp-->
+
+    <div class="container">
+
+        <h2>FORMULARIO DE BÚSQUEDA</h2>
+
+        <div class="input-group">
+
+            <form method="POST" id="searchForm" onsubmit="return searchValidate()" name="searchForm">
+                <div class="form-group">
+                    <label for="search">Buscar</label>
+                    <input class="form-control" id="search" placeholder="Introduce tu búsqueda">
+
+                    <div class="invalid-feedback" id="errorSearch"></div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+
+                <div class="invalid-feedback" id="errorSearch"></div>
+            </form>
+        </div>
+        <br>
+        <br>
+
+        <!-- En form pondremos "novalidate" para que HTML5 no me haga la validación de si lo que pongo es un email (interesa que la validación la haga mi código) -->
+
+        <h2>FORMULARIO DE LOGIN</h2>
+        <form method="POST" novalidate id="loginForm" onsubmit="return loginValidate()" name="loginForm">
+            <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp"
+                    placeholder="Introduce tu email">
+                <div class="invalid-feedback" id="errorEmail"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword">Contraseña</label>
+                <input type="password" class="form-control" id="loginPassword" placeholder="Introduce tu contraseña">
+                <div class="invalid-feedback" id="errorPass"></div>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="loginCheck">
+                <label class="form-check-label" for="loginCheck">Recordar contraseña</label>
+            </div>
+            <br>
+
+
+            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+        <br>
+        <br>
+
+
+
+        <h2>FORMULARIO DE REGISTRO</h2>
+        <form method="POST" id="registerForm" novalidate onsubmit="return registerValidate()" name="registerForm">
+            <div class="form-group">
+                <label for="inputEmail2">Email</label>
+                <input type="email" class="form-control" id="registerEmail" aria-describedby="emailHelp"
+                    placeholder="Introduce tu email">
+                <div class="invalid-feedback" id="errorEmailR"></div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword2">Contraseña</label>
+                <input type="password" class="form-control" id="registerPassword"
+                    placeholder="Introduce una contraseña">
+                <!-- 
+                    // ALTERNATIVA CON PROPIEDAD PATTERN DE BOOTSRAP:  
+                <input type="password" class="form-control" id="registerPassword" pattern=".*[0-9].*"
+                    placeholder="Introduce una contraseña">-->
+                <small id="namelHelp" class="form-text text-muted">*Debe incluir al menos 8 caracteres, un número, una
+                    minúscula y una mayúscula</small>
+
+                <div class="invalid-feedback" id="errorPassR"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPassword3">Repite tu contraseña</label>
+                <input type="password" class="form-control" id="registerRepeatPassword"
+                    placeholder="Repite tu contraseña">
+                <div class="invalid-feedback" id="errorPassR2"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="provincia">Provincia</label>
+                <select id="provincia" class="form-control">
+                    <option selected value=""></option>
+                    <option>Barcelona</option>
+                    <option>Girona</option>
+                    <option>Tarragona</option>
+                    <option>Lleida</option>
+                </select>
+                <div class="invalid-feedback" id="errorProvincia"></div>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
+    </div>
+
+    <script src="formvalidation.js"></script>
+
+    <!-- SCRIPTS VERSIÓN CDN-->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
