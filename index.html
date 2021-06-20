@@ -17,11 +17,13 @@
 <body>
 
     <!-- TEMAS QUE FALLAN/COMENTAR PABLO
-    1) Cuando provoco error y luego escribo bien, no refresca y quita el mensaje de error.
-    2) Validación buscador 
-    3) Duda: Bootstrap de por si ya mira que el formato mail sea correcto, ¿se puede controlar el mensaje de error?
-    4) Por qué he de borrar esto para que funcione el SEARCH searchForm.classList.remove('is-invalid'); ??
-    5) ¿Ya valen los mensajes que pongo o he de afinar más ("falta una mayúscula en la contraseña")?
+        1) Cuando provoco error y luego escribo bien, no refresca y quita el mensaje de error.
+    2) Duda: Bootstrap de por si ya mira que el formato mail sea correcto, ¿se puede controlar el mensaje de error?
+        3) Por qué he de borrar esto para que funcione el SEARCH searchForm.classList.remove('is-invalid'); ??
+    4) ¿Ya valen los mensajes que pongo o he de afinar más ("falta una mayúscula en la contraseña")?
+
+
+    - Regex email validacion
 -->
 
     <!-- VALIDAR FORMULARIS:
@@ -64,8 +66,10 @@ ejemplo: https://www.w3schools.com/js/js_validation.asp-->
         <br>
         <br>
 
+        <!-- En form pondremos "novalidate" para que HTML5 no me haga la validación de si lo que pongo es un email (interesa que la validación la haga mi código) -->
+
         <h2>FORMULARIO DE LOGIN</h2>
-        <form method="POST" id="loginForm" onsubmit="return loginValidate()" name="loginForm">
+        <form method="POST" novalidate id="loginForm" onsubmit="return loginValidate()" name="loginForm">
             <div class="form-group">
                 <label for="inputEmail">Email</label>
                 <input type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp"
@@ -94,7 +98,7 @@ ejemplo: https://www.w3schools.com/js/js_validation.asp-->
 
 
         <h2>FORMULARIO DE REGISTRO</h2>
-        <form method="POST" id="registerForm" onsubmit="return registerValidate()" name="registerForm">
+        <form method="POST" id="registerForm" novalidate onsubmit="return registerValidate()" name="registerForm">
             <div class="form-group">
                 <label for="inputEmail2">Email</label>
                 <input type="email" class="form-control" id="registerEmail" aria-describedby="emailHelp"
